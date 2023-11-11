@@ -35,9 +35,8 @@ export const signIn = async (req, res, next) => {
         // create token
         const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET)
         // remove pass-before sent it to the client
-        const {password: pass, ...rest} = validUser._doc
+        const { password: pass, ...rest } = validUser._doc
         // Save the token in a cookie
-        console.log(rest)
         res.cookie('access_token', token, {
             httpOnly: true,
         }).status(200).json({ rest });
