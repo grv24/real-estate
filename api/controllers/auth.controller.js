@@ -39,6 +39,7 @@ export const signIn = async (req, res, next) => {
         // Save the token in a cookie
         res.cookie('access_token', token, {
             httpOnly: true,
+            secure: true,
         }).status(200).json({ rest });
 
     } catch (error) {
