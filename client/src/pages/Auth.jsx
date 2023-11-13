@@ -63,11 +63,9 @@ const Auth = () => {
           withCredentials: true,
         }
       );
-      console.log(res);
       dispatch(signInSuccess(res.data.rest));
       navigate("/profile");
     } catch (error) {
-      console.log(error);
       // setError(error.response.data.message);
       // setLoading(false);
       dispatch(signInFailure(error.response.data.message));
