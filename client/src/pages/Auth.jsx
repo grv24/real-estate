@@ -1,13 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 const Auth = () => {
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const [variant, setVariant] = useState("signin");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -24,29 +30,29 @@ const Auth = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await axios.post(
-        "http://localhost:3000/api/auth/signup",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(res);
-      setLoading(false);
-      setError(null);
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   const res = await axios.post(
+    //     "http://localhost:3000/api/auth/signup",
+    //     formData,
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
+    //   console.log(res);
+    //   setLoading(false);
+    //   setError(null);
+    // } catch (error) {
+    //   setError(error.response.data.message);
+    //   setLoading(false);
+    // }
   };
-  const handleSignIn = async(e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      dispatch(signInStart());
       const res = await axios.post(
         "http://localhost:3000/api/auth/signin",
         formData,
@@ -57,17 +63,16 @@ const Auth = () => {
           withCredentials: true,
         }
       );
-      console.log(res)
-      navigate('/profile')
-      setLoading(false);
-      setError(null);
+      console.log(res);
+      dispatch(signInSuccess(res.data.rest));
+      navigate("/profile");
     } catch (error) {
-     console.log(error)
-      setError(error.response.data.message);
-      setLoading(false);
+      console.log(error);
+      // setError(error.response.data.message);
+      // setLoading(false);
+      dispatch(signInFailure(error.response.data.message));
     }
   };
-
 
   return (
     <div className="p-3 max-w-lg mx-auto">
