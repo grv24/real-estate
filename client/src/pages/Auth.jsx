@@ -62,6 +62,7 @@ const Auth = () => {
       setLoading(false);
       setError(null);
     } catch (error) {
+     console.log(error)
       setError(error.response.data.message);
       setLoading(false);
     }
@@ -81,7 +82,7 @@ const Auth = () => {
           <input
             onChange={handleChange}
             type="text"
-            placeholder="username"
+            placeholder="Username"
             className="border p-3 rounded-lg"
             id="username"
           />
@@ -89,14 +90,14 @@ const Auth = () => {
         <input
           onChange={handleChange}
           type="email"
-          placeholder="email"
+          placeholder="Email"
           className="border p-3 rounded-lg"
           id="email"
         />
         <input
           onChange={handleChange}
           type="password"
-          placeholder="password"
+          placeholder="Password"
           className="border p-3 rounded-lg"
           id="password"
         />
