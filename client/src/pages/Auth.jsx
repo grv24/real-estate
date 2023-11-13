@@ -6,6 +6,9 @@ import {
   signInStart,
   signInFailure,
   signInSuccess,
+  signUpStart,
+  signUpSuccess,
+  signUpFailure,
 } from "../redux/user/userSlice";
 
 const Auth = () => {
@@ -30,24 +33,21 @@ const Auth = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    // try {
-    //   setLoading(true);
-    //   const res = await axios.post(
-    //     "http://localhost:3000/api/auth/signup",
-    //     formData,
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   console.log(res);
-    //   setLoading(false);
-    //   setError(null);
-    // } catch (error) {
-    //   setError(error.response.data.message);
-    //   setLoading(false);
-    // }
+    try {
+      dispatch(signUpStart());
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/signup",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch(signUpSuccess(res.data.message));
+    } catch (error) {
+      dispatch(signUpFailure(error.response.data.message));
+    }
   };
   const handleSignIn = async (e) => {
     e.preventDefault();
