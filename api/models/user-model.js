@@ -15,9 +15,13 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
+    },
+    avatar:{
+        type: String,
+        default:"https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png"
     }
 
-}, { Timestamp: true })
+}, { timestamps: true })
 
 const User = mongoose.model('User', userSchema);
 

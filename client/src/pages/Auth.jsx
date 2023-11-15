@@ -10,6 +10,7 @@ import {
   signUpSuccess,
   signUpFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 const Auth = () => {
   const [formData, setFormData] = useState({});
@@ -64,7 +65,7 @@ const Auth = () => {
         }
       );
       dispatch(signInSuccess(res.data.rest));
-      navigate("/profile");
+      navigate("/");
     } catch (error) {
       // setError(error.response.data.message);
       // setLoading(false);
@@ -115,6 +116,7 @@ const Auth = () => {
             ? "Sign In"
             : "Sign Up"}
         </button>
+        <OAuth/>
       </form>
       {error && <p className="text-red-500">{error}</p>}
       <div className="flex gap-2 mt-5">
